@@ -1,8 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>quicktools — Directory</title>
 
   <style>
@@ -19,8 +21,8 @@
 
     .top {
       height: 3px;
-      background: linear-gradient(90deg, #f78166 45px, transparent 45px);
-      border-bottom: 1px solid #30363d;
+      background: #f78166;
+      width: 45px;
     }
 
     .container {
@@ -78,6 +80,8 @@
       padding: 14px 18px;
       color: #8b949e;
       font-size: 14px;
+      display: flex;
+      justify-content: space-between;
     }
 
     .file {
@@ -103,17 +107,20 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      min-width: 0;
     }
 
     .icon {
       width: 28px;
       text-align: center;
       font-size: 19px;
+      flex-shrink: 0;
     }
 
     .filename {
       color: #58a6ff;
       font-size: 15px;
+      word-break: break-all;
     }
 
     .description {
@@ -125,16 +132,22 @@
     .arrow {
       color: #8b949e;
       font-size: 18px;
+      margin-left: 15px;
     }
 
     .status {
-      padding: 20px;
+      padding: 25px;
       color: #8b949e;
       text-align: center;
     }
 
     .error {
       color: #f85149;
+    }
+
+    .count {
+      color: #8b949e;
+      font-size: 12px;
     }
 
     footer {
@@ -165,7 +178,8 @@
   <div class="directory">
 
     <div class="directory-header">
-      Repository files
+      <span>Repository files</span>
+      <span id="count" class="count"></span>
     </div>
 
     <div id="files" class="status">
@@ -175,121 +189,174 @@
   </div>
 
   <footer>
-    Automatically generated from GitHub
+    Automatically updated from GitHub
   </footer>
 
 </div>
 
 <script>
-  /*
-   * CHANGE THESE TWO VALUES
-   */
-
-  const GITHUB_USER = "kingjunaid098";
-  const GITHUB_REPO = "growwexporter";
-
-  /*
-   * Optional: folder inside the repository.
-   * Leave empty "" for the repository root.
-   */
-
-  const FOLDER = "";
+  const OWNER = "kingjunaid098";
+  const REPO = "quicktools";
+  const BRANCH = "main";
 
   const filesContainer = document.getElementById("files");
+  const countElement = document.getElementById("count");
 
-  async function loadFiles() {
-    const url =
-      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FOLDER}`;
+  async function loadDirectory() {
+
+    const apiURL =
+      `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`;
 
     try {
-      const response = await fetch(url);
+
+      const response = await fetch(apiURL, {
+        cache: "no-store"
+      });
 
       if (!response.ok) {
-        throw new Error(`GitHub API returned ${response.status}`);
+        throw new Error(`GitHub API error: ${response.status}`);
       }
 
-      const files = await response.json();
+      const data = await response.json();
+
+      if (!data.tree) {
+        throw new Error("No files returned by GitHub.");
+      }
+
+      /*
+       * Only files.
+       * Ignore GitHub's own metadata.
+       */
+
+      const files = data.tree
+        .filter(item => item.type === "blob")
+        .filter(item => item.path !== "index.html")
+        .filter(item => item.path !== "robots.txt")
+        .sort((a, b) =>
+          a.path.localeCompare(b.path)
+        );
 
       filesContainer.innerHTML = "";
 
-      /*
-       * Sort folders first, then files alphabetically.
-       */
+      countElement.textContent =
+        `${files.length} file${files.length === 1 ? "" : "s"}`;
 
-      files.sort((a, b) => {
-        if (a.type === b.type) {
-          return a.name.localeCompare(b.name);
-        }
-
-        return a.type === "dir" ? -1 : 1;
-      });
+      if (files.length === 0) {
+        filesContainer.innerHTML =
+          `<div class="status">No files found.</div>`;
+        return;
+      }
 
       files.forEach(file => {
-
-        /*
-         * Ignore the directory page itself.
-         */
-
-        if (file.name === "index.html") {
-          return;
-        }
 
         const link = document.createElement("a");
 
         link.className = "file";
 
         /*
-         * GitHub Pages / normal website URL.
+         * GitHub Pages URL.
+         *
+         * Example:
+         * growwexporter
+         *
+         * becomes:
+         * ./growwexporter
          */
 
-        if (file.type === "dir") {
-          link.href = `./${file.name}/`;
-        } else {
-          link.href = `./${file.name}`;
+        link.href = `./${file.path}`;
+
+        /*
+         * Open normal web files directly.
+         */
+
+        const extension =
+          file.path.includes(".")
+            ? file.path.split(".").pop().toLowerCase()
+            : "";
+
+        let icon = "📄";
+        let description = "File";
+
+        if (extension === "html") {
+          icon = "🌐";
+          description = "Web page";
         }
 
-        const icon = file.type === "dir" ? "📁" : "📄";
+        if (extension === "css") {
+          icon = "🎨";
+          description = "Stylesheet";
+        }
 
-        const description =
-          file.type === "dir"
-            ? "Directory"
-            : "File";
+        if (extension === "js") {
+          icon = "⚡";
+          description = "JavaScript";
+        }
 
-        link.innerHTML = `
-          <div class="file-left">
-            <div class="icon">${icon}</div>
+        if (extension === "json") {
+          icon = "📦";
+          description = "JSON";
+        }
 
-            <div>
-              <span class="filename">
-                ${escapeHTML(file.name)}
-              </span>
+        if (
+          ["png", "jpg", "jpeg", "gif", "webp", "svg"]
+            .includes(extension)
+        ) {
+          icon = "🖼️";
+          description = "Image";
+        }
 
-              <span class="description">
-                ${description}
-              </span>
-            </div>
-          </div>
+        if (
+          ["zip", "rar", "7z"]
+            .includes(extension)
+        ) {
+          icon = "📦";
+          description = "Archive";
+        }
 
-          <div class="arrow">→</div>
-        `;
+        const left = document.createElement("div");
+        left.className = "file-left";
+
+        const iconElement = document.createElement("div");
+        iconElement.className = "icon";
+        iconElement.textContent = icon;
+
+        const info = document.createElement("div");
+
+        const filename = document.createElement("span");
+        filename.className = "filename";
+        filename.textContent = file.path;
+
+        const desc = document.createElement("span");
+        desc.className = "description";
+        desc.textContent = description;
+
+        info.appendChild(filename);
+        info.appendChild(desc);
+
+        left.appendChild(iconElement);
+        left.appendChild(info);
+
+        const arrow = document.createElement("div");
+        arrow.className = "arrow";
+        arrow.textContent = "→";
+
+        link.appendChild(left);
+        link.appendChild(arrow);
 
         filesContainer.appendChild(link);
       });
-
-      if (!filesContainer.children.length) {
-        filesContainer.innerHTML =
-          '<div class="status">No files found.</div>';
-      }
 
     } catch (error) {
 
       console.error(error);
 
+      countElement.textContent = "";
+
       filesContainer.innerHTML = `
         <div class="status error">
           Unable to load repository files.
           <br><br>
-          Make sure the repository is public.
+          ${escapeHTML(error.message)}
         </div>
       `;
     }
@@ -301,8 +368,17 @@
     return div.innerHTML;
   }
 
-  loadFiles();
+  loadDirectory();
+
+  /*
+   * Refresh the directory every 60 seconds.
+   * This means newly-added files appear automatically
+   * without manually editing index.html.
+   */
+
+  setInterval(loadDirectory, 60000);
 </script>
 
 </body>
 </html>
+```
