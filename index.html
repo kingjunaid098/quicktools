@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      font-size: 14px;
+      color: #d1d5db;
+    }
+
+    h1 {
+      font-size: clamp(48px, 10vw, 90px);
+      line-height: 1;
+      margin-bottom: 24px;
+      font-weight: 800;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin-bottom: 35px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 28px;
+      background: white;
+      color: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="badge">Something exciting is coming</div>
+
+    <h1>Coming Soon</h1>
+
+    <p>
+      We're working on something amazing.<br>
+      Stay tuned — we'll be launching very soon.
+    </p>
+
+    <a href="mailto:hello@example.com" class="button">
+      Get in Touch
+    </a>
+
+    <footer>
+      &copy; 2026 Your Company. All rights reserved.
+    </footer>
+  </main>
+</body>
+</html>
