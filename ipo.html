@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPO Profit & Settlement Calculator</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+      :root {
+        --bg: #f4f6f8;
+        --card: #ffffff;
+        --text: #17202a;
+        --muted: #68737d;
+        --border: #dfe4e8;
+        --dark: #17202a;
+        --green-bg: #eaf8ef;
+        --green-border: #cce8d5;
+        --green-text: #1e7e34;
+        --red-bg: #fdf2f2;
+        --red-border: #f8b4b4;
+        --red-text: #9b1c1c;
+        --blue-bg: #edf5ff;
+        --blue-border: #d4e3fb;
+        --orange-bg: #fff6e7;
+        --orange-border: #f1ddb7;
+      }
+      * {
+        box-sizing: border-box;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 24px 16px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 28px;
+        letter-spacing: -0.5px;
+      }
+      .sub {
+        margin: 0 0 24px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      }
+      h2 {
+        font-size: 17px;
+        margin: 0 0 16px;
+        color: var(--dark);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .field label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #4a5660;
+        margin-bottom: 6px;
+      }
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #cbd3d9;
+        border-radius: 10px;
+        font-size: 16px;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      input:focus {
+        border-color: #4b7bec;
+        box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.15);
+      }
+      .full {
+        grid-column: 1 / -1;
+      }
+      .toggle {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .toggle button {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #cbd3d9;
+        background: #fff;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .toggle button.active {
+        background: var(--dark);
+        color: #fff;
+        border-color: var(--dark);
+      }
+      .results {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .result {
+        padding: 14px;
+        border-radius: 12px;
+        background: #f7f8fa;
+        border: 1px solid #e7eaed;
+      }
+      .result span {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        color: #68737d;
+        margin-bottom: 6px;
+      }
+      .result strong {
+        font-size: 20px;
+        word-break: break-all;
+      }
+      .result-profit.is-positive {
+        background: var(--green-bg);
+        border-color: var(--green-border);
+        color: var(--green-text);
+      }
+      .result-profit.is-negative {
+        background: var(--red-bg);
+        border-color: var(--red-border);
+        color: var(--red-text);
+      }
+      .orange {
+        background: var(--orange-bg);
+        border-color: var(--orange-border);
+      }
+      .blue {
+        background: var(--blue-bg);
+        border-color: var(--blue-border);
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 12px 0;
+        border-bottom: 1px solid #edf0f2;
+      }
+      .summary-row:last-child {
+        border-bottom: 0;
+      }
+      .summary-row b:last-child {
+        text-align: right;
+      }
+      .highlight {
+        font-size: 24px;
+        color: var(--dark);
+      }
+      .note {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        margin: 14px 0 0;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+      }
+      button.action {
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      button.action:hover {
+        opacity: 0.9;
+      }
+      .primary {
+        background: var(--dark);
+        color: #fff;
+      }
+      .secondary {
+        background: #e8edf1;
+        color: var(--dark);
+      }
+      @media (max-width: 650px) {
+        .grid,
+        .results {
+          grid-template-columns: 1fr;
+        }
+        .full {
+          grid-column: auto;
+        }
+        .highlight {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>IPO Profit & Settlement Calculator</h1>
+      <p class="sub">
+        Calculate investment, profit allocation, total available funds, and
+        settlement amounts. Data auto-saves for 72 hours.
+      </p>
+
+      <div class="card">
+        <h2>1. Current IPO Inputs</h2>
+        <div class="toggle">
+          <button id="singleBtn" class="active" onclick="setMode('single')">
+            Single Lot
+          </button>
+          <button id="multiBtn" onclick="setMode('multi')">
+            Multiple Lots
+          </button>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="buy">IPO Bought Price — Per Lot</label>
+            <input
+              id="buy"
+              type="number"
+              value="0"
+              min="0"
+              step="1"
+              onfocus="this.select()"
+              oninput="calculate()"
+            />
+          </div>
+
+          <div class="field">
+            <label for="sell">IPO Sold Price — Per Lot</label>
+            <input
+              id="sell"
+              type="number"
+              value="0"
+              min="0"
+              step="1"
+              onfocus="this.select()"
+              oninput="calculate()"
+            />
+          </div>
+
+          <div class="field" id="lotsBox" style="display: none">
+            <label for="lots">Number of Lots</label>
+            <input
+              id="lots"
+              type="number"
+              value="1"
+              min="1"
+              step="1"
+              onfocus="this.select()"
+              oninput="calculate()"
+            />
+          </div>
+
+          <div class="field">
+            <label for="holderPct">Account Holder Share (%)</label>
+            <input
+              id="holderPct"
+              type="number"
+              value="10"
+              min="0"
+              max="100"
+              step="1"
+              onfocus="this.select()"
+              oninput="calculate()"
+            />
+          </div>
+        </div>
+
+        <p class="note">
+          For multiple lots, prices are calculated on total lot volume. The
+          account holder percentage is applied only to net gross profit.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>2. Calculation Summary</h2>
+        <div class="results">
+          <div class="result">
+            <span>Total Bought Value</span>
+            <strong id="boughtTotal">₹0</strong>
+          </div>
+          <div class="result">
+            <span>Total Sold Value</span>
+            <strong id="soldTotal">₹0</strong>
+          </div>
+          <div class="result result-profit" id="grossProfitBox">
+            <span>Gross Profit / Loss</span>
+            <strong id="grossProfit">₹0</strong>
+          </div>
+          <div class="result orange">
+            <span>Account Holder Share</span>
+            <strong id="holderShare">₹0</strong>
+          </div>
+          <div class="result blue">
+            <span>Profit After Share</span>
+            <strong id="profitAfter">₹0</strong>
+          </div>
+          <div class="result">
+            <span>Lots</span>
+            <strong id="lotsDisplay">1</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>3. Total Available Capital</h2>
+        <div class="summary-row">
+          <span>Original Invested Amount</span>
+          <b id="originalAmount">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Profit After Account Holder Share</span>
+          <b id="profitAfter2">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span><strong>Total Amount Available</strong></span>
+          <b id="totalAvailable">₹0</b>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>4. Reinvestment / Next IPO</h2>
+        <div class="grid">
+          <div class="field full">
+            <label for="newIpo">Amount to Keep for New IPO</label>
+            <input
+              id="newIpo"
+              type="number"
+              value="0"
+              min="0"
+              step="1"
+              onfocus="this.select()"
+              oninput="calculate()"
+            />
+          </div>
+        </div>
+
+        <div class="summary-row" style="margin-top: 14px">
+          <span>Total Available Funds</span>
+          <b id="availableForNew">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Less: Retained for New IPO</span>
+          <b id="lessNew">− ₹0</b>
+        </div>
+        <div class="summary-row">
+          <span><strong>Net Amount to Receive Back</strong></span>
+          <b class="highlight" id="receiveBack">₹0</b>
+        </div>
+
+        <div
+          class="summary-row"
+          id="shortageRow"
+          style="display: none; color: var(--red-text)"
+        >
+          <span><strong>Additional Funds Needed</strong></span>
+          <b id="shortage">₹0</b>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Final Settlement Breakdown</h2>
+        <div class="summary-row">
+          <span>Total Invested</span><b id="fBought">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Gross Profit / Loss</span><b id="fGross">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Account Holder Share</span><b id="fHolder">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Profit Retained</span><b id="fProfit">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Total Available Capital</span><b id="fTotal">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span>Reserved for Next IPO</span><b id="fNew">₹0</b>
+        </div>
+        <div class="summary-row">
+          <span><strong>FINAL AMOUNT TO RECEIVE</strong></span>
+          <b class="highlight" id="fReceive">₹0</b>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copyBtn" class="action primary" onclick="copySummary()">
+          Copy Settlement
+        </button>
+        <button class="action secondary" onclick="resetCalculator()">
+          Reset Data
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let mode = "single";
+      const STORAGE_KEY = "ipo_calculator_data";
+      const EXPIRY_TIME_MS = 72 * 60 * 60 * 1000; // 72 Hours in milliseconds
+
+      function money(value) {
+        const n = Math.round(Number(value) || 0);
+        const prefix = n < 0 ? "-₹" : "₹";
+        return (
+          prefix +
+          Math.abs(n).toLocaleString("en-IN", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })
+        );
+      }
+
+      function val(id) {
+        return parseFloat(document.getElementById(id).value) || 0;
+      }
+
+      function setMode(newMode) {
+        mode = newMode;
+        document
+          .getElementById("singleBtn")
+          .classList.toggle("active", mode === "single");
+        document
+          .getElementById("multiBtn")
+          .classList.toggle("active", mode === "multi");
+        document.getElementById("lotsBox").style.display =
+          mode === "multi" ? "block" : "none";
+        calculate();
+      }
+
+      function calculate() {
+        const buyPerLot = val("buy");
+        const sellPerLot = val("sell");
+        const lots =
+          mode === "multi" ? Math.max(1, Math.floor(val("lots"))) : 1;
+        const holderPct = Math.min(100, Math.max(0, val("holderPct")));
+        const newIpo = Math.max(0, val("newIpo"));
+
+        const boughtTotal = buyPerLot * lots;
+        const soldTotal = sellPerLot * lots;
+        const grossProfit = soldTotal - boughtTotal;
+
+        const holderShare =
+          grossProfit > 0 ? (grossProfit * holderPct) / 100 : 0;
+        const profitAfter = grossProfit - holderShare;
+        const totalAvailable = boughtTotal + profitAfter;
+
+        const receiveBack = Math.max(0, totalAvailable - newIpo);
+        const shortage = Math.max(0, newIpo - totalAvailable);
+
+        // UI Updates
+        document.getElementById("boughtTotal").textContent = money(boughtTotal);
+        document.getElementById("soldTotal").textContent = money(soldTotal);
+        document.getElementById("grossProfit").textContent = money(grossProfit);
+
+        const grossBox = document.getElementById("grossProfitBox");
+        grossBox.classList.toggle("is-positive", grossProfit > 0);
+        grossBox.classList.toggle("is-negative", grossProfit < 0);
+
+        document.getElementById("holderShare").textContent = money(holderShare);
+        document.getElementById("profitAfter").textContent = money(profitAfter);
+        document.getElementById("lotsDisplay").textContent = lots;
+
+        document.getElementById("originalAmount").textContent =
+          money(boughtTotal);
+        document.getElementById("profitAfter2").textContent =
+          money(profitAfter);
+        document.getElementById("totalAvailable").textContent =
+          money(totalAvailable);
+
+        document.getElementById("availableForNew").textContent =
+          money(totalAvailable);
+        document.getElementById("lessNew").textContent = "− " + money(newIpo);
+        document.getElementById("receiveBack").textContent = money(receiveBack);
+
+        document.getElementById("fBought").textContent = money(boughtTotal);
+        document.getElementById("fGross").textContent = money(grossProfit);
+        document.getElementById("fHolder").textContent = money(holderShare);
+        document.getElementById("fProfit").textContent = money(profitAfter);
+        document.getElementById("fTotal").textContent = money(totalAvailable);
+        document.getElementById("fNew").textContent = money(newIpo);
+        document.getElementById("fReceive").textContent = money(receiveBack);
+
+        const shortageRow = document.getElementById("shortageRow");
+        shortageRow.style.display = shortage > 0 ? "flex" : "none";
+        document.getElementById("shortage").textContent = money(shortage);
+
+        saveState();
+      }
+
+      function saveState() {
+        const payload = {
+          timestamp: Date.now(),
+          mode: mode,
+          buy: document.getElementById("buy").value,
+          sell: document.getElementById("sell").value,
+          lots: document.getElementById("lots").value,
+          holderPct: document.getElementById("holderPct").value,
+          newIpo: document.getElementById("newIpo").value,
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+
+        try {
+          const data = JSON.parse(raw);
+          const now = Date.now();
+
+          // Check if data is older than 72 hours
+          if (now - data.timestamp > EXPIRY_TIME_MS) {
+            localStorage.removeItem(STORAGE_KEY);
+            return;
+          }
+
+          document.getElementById("buy").value = data.buy || 0;
+          document.getElementById("sell").value = data.sell || 0;
+          document.getElementById("lots").value = data.lots || 1;
+          document.getElementById("holderPct").value = data.holderPct || 10;
+          document.getElementById("newIpo").value = data.newIpo || 0;
+
+          if (data.mode) {
+            setMode(data.mode);
+          }
+        } catch (e) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+
+      function copySummary() {
+        const lots =
+          mode === "multi" ? Math.max(1, Math.floor(val("lots"))) : 1;
+        const text = `IPO SETTLEMENT SUMMARY
+-----------------------
+Bought Price/Lot: ${money(val("buy"))}
+Sold Price/Lot: ${money(val("sell"))}
+Lots: ${lots}
+-----------------------
+Total Bought: ${document.getElementById("boughtTotal").textContent}
+Total Sold: ${document.getElementById("soldTotal").textContent}
+Gross Profit/Loss: ${document.getElementById("grossProfit").textContent}
+Holder Share (${val("holderPct")}%): ${document.getElementById("holderShare").textContent}
+Profit After Share: ${document.getElementById("profitAfter").textContent}
+-----------------------
+Total Capital Available: ${document.getElementById("totalAvailable").textContent}
+Kept for Next IPO: ${money(val("newIpo"))}
+AMOUNT TO RECEIVE: ${document.getElementById("receiveBack").textContent}`;
+
+        const btn = document.getElementById("copyBtn");
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = "Copied!";
+          setTimeout(() => {
+            btn.textContent = "Copy Settlement";
+          }, 2000);
+        });
+      }
+
+      function resetCalculator() {
+        localStorage.removeItem(STORAGE_KEY);
+        document.getElementById("buy").value = 0;
+        document.getElementById("sell").value = 0;
+        document.getElementById("lots").value = 1;
+        document.getElementById("holderPct").value = 10;
+        document.getElementById("newIpo").value = 0;
+        setMode("single");
+      }
+
+      // Initialize page
+      loadState();
+      calculate();
+    </script>
+  </body>
+</html>
