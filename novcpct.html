@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPCT Final Exam Tracker - 12 Nov 2026</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #172033;
+        --muted: #667085;
+        --line: #e7eaf0;
+        --soft-blue: #eff6ff;
+        --soft-green: #ecfdf3;
+        --soft-red: #fef2f2;
+        --shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        padding: 24px;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+          ),
+          var(--bg);
+        color: var(--text);
+      }
+
+      .container {
+        width: min(100%, 900px);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Hero */
+      .header-card {
+        position: relative;
+        overflow: hidden;
+        padding: 34px 28px;
+        border-radius: 24px;
+        color: #fff;
+        text-align: center;
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        box-shadow: 0 18px 40px rgba(37, 99, 235, 0.18);
+      }
+
+      .header-card::before,
+      .header-card::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        pointer-events: none;
+      }
+
+      .header-card::before {
+        width: 190px;
+        height: 190px;
+        right: -80px;
+        top: -100px;
+      }
+
+      .header-card::after {
+        width: 130px;
+        height: 130px;
+        left: -55px;
+        bottom: -75px;
+      }
+
+      .header-card h1 {
+        position: relative;
+        z-index: 1;
+        font-size: clamp(1.55rem, 4vw, 2rem);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 6px;
+      }
+
+      .header-card p {
+        position: relative;
+        z-index: 1;
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .ist-clock-box {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 9px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(8px);
+      }
+
+      .ist-clock-box span {
+        display: inline;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+
+      #ist-time {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+      }
+
+      /* Countdown */
+      .countdown-card,
+      .info-card,
+      .centers-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .countdown-card {
+        padding: 24px;
+        text-align: center;
+      }
+
+      .countdown-card h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .countdown-card h2 i {
+        color: var(--primary);
+      }
+
+      .timer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .timer-box {
+        padding: 15px 8px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fafbfc;
+      }
+
+      .timer-value {
+        display: block;
+        font-size: clamp(1.45rem, 5vw, 2rem);
+        line-height: 1.1;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .timer-label {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.67rem;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+      }
+
+      /* Info cards */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .info-card {
+        padding: 22px;
+      }
+
+      .info-card h3,
+      .centers-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 16px;
+        font-size: 0.98rem;
+        font-weight: 650;
+      }
+
+      .info-card h3 i,
+      .centers-card h3 i {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--soft-blue);
+        color: var(--primary);
+        font-size: 0.85rem;
+      }
+
+      .check-list {
+        list-style: none;
+        display: grid;
+        gap: 12px;
+      }
+
+      .check-list li {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        align-items: start;
+        gap: 9px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f0f1f4;
+        color: #344054;
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+
+      .check-list li:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .check-list li i {
+        margin-top: 3px;
+        color: var(--success);
+        font-size: 0.9rem;
+      }
+
+      .warn-list li i {
+        color: var(--danger);
+      }
+
+      .check-list strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* Centers */
+      .centers-card {
+        padding: 22px;
+      }
+
+      .city-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .city-tag {
+        padding: 7px 12px;
+        border: 1px solid #dbeafe;
+        border-radius: 999px;
+        background: var(--soft-blue);
+        color: var(--primary-dark);
+        font-size: 0.78rem;
+        font-weight: 550;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 14px;
+        }
+
+        .container {
+          gap: 12px;
+        }
+
+        .header-card {
+          padding: 28px 18px;
+          border-radius: 20px;
+        }
+
+        .ist-clock-box {
+          flex-direction: column;
+          gap: 2px;
+          border-radius: 14px;
+        }
+
+        .countdown-card,
+        .info-card,
+        .centers-card {
+          border-radius: 16px;
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .timer-grid {
+          gap: 7px;
+        }
+
+        .timer-box {
+          padding: 13px 5px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .timer-value {
+          font-size: 1.25rem;
+        }
+
+        .timer-label {
+          font-size: 0.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header & Live IST Clock -->
+      <div class="header-card">
+        <h1>CPCT Final Exam Tracker</h1>
+        <p>Target Date: <strong>12 November 2026</strong></p>
+        <div class="ist-clock-box">
+          <span>Indian Standard Time (IST)</span>
+          <div id="ist-time">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Countdown Timer Card -->
+      <div class="countdown-card">
+        <h2 id="countdown-title">
+          <i class="fa-solid fa-stopwatch"></i> Countdown to Exam Day
+        </h2>
+        <div class="timer-grid">
+          <div class="timer-box">
+            <span class="timer-value" id="days">00</span>
+            <span class="timer-label">Days</span>
+          </div>
+          <div class="timer-box">
+            <span class="timer-value" id="hours">00</span>
+            <span class="timer-label">Hours</span>
+          </div>
+          <div class="timer-box">
+            <span class="timer-value" id="minutes">00</span>
+            <span class="timer-label">Mins</span>
+          </div>
+          <div class="timer-box">
+            <span class="timer-value" id="seconds">00</span>
+            <span class="timer-label">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Center Requirements & Rules -->
+      <div class="info-grid">
+        <!-- What to Carry -->
+        <div class="info-card">
+          <h3><i class="fa-solid fa-folder-closed"></i> Mandatory Documents</h3>
+          <ul class="check-list">
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span
+                ><strong>Admit Card:</strong> Black & White photocopy
+                printout</span
+              >
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span
+                ><strong>Original Aadhaar Card:</strong> Required for ID
+                verification</span
+              >
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i>
+              <span
+                ><strong>Photos:</strong> 2 recent passport-size photos</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Exam Day Guidelines -->
+        <div class="info-card">
+          <h3><i class="fa-solid fa-shield-halved"></i> Dress Code & Rules</h3>
+          <ul class="check-list warn-list">
+            <li>
+              <i class="fa-solid fa-ban"></i>
+              <span
+                ><strong>No Belts:</strong> Strictly prohibited in the exam
+                hall</span
+              >
+            </li>
+            <li>
+              <i class="fa-solid fa-ban"></i>
+              <span
+                ><strong>No Accessories:</strong> Avoid jewelry, watches, or
+                metal items</span
+              >
+            </li>
+            <li>
+              <i class="fa-solid fa-user-check"></i>
+              <span
+                ><strong>Clean Look:</strong> Simple attire recommended for fast
+                security checking</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Quick visual reminder -->
+      <div class="centers-card">
+        <h3><i class="fa-solid fa-location-dot"></i> Quick Reminder</h3>
+        <div class="city-tags">
+          <span class="city-tag">Admit Card</span>
+          <span class="city-tag">Original Aadhaar</span>
+          <span class="city-tag">2 Photos</span>
+          <span class="city-tag">No Belt</span>
+          <span class="city-tag">No Metal Accessories</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript for Live IST Clock & Countdown -->
+    <script>
+      // Target Exam Date: 12th November 2026 09:00:00 IST
+      const targetExamDate = new Date(
+        "November 12, 2026 09:00:00 GMT+0530",
+      ).getTime();
+
+      function updateISTClockAndCountdown() {
+        // Get current time in UTC
+        const now = new Date();
+
+        // Convert to Indian Standard Time (UTC + 5:30)
+        const utcTime = now.getTime() + now.getTimezoneOffset() * 60000;
+        const istOffset = 5.5 * 60 * 60 * 1000;
+        const istTime = new Date(utcTime + istOffset);
+
+        // Format Live IST Clock String
+        const options = {
+          timeZone: "Asia/Kolkata",
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        };
+
+        const istTimeString = istTime.toLocaleString("en-IN", options);
+        document.getElementById("ist-time").innerText = istTimeString;
+
+        // Countdown Logic for Nov 12, 2026
+        const timeDifference = targetExamDate - istTime.getTime();
+
+        if (timeDifference > 0) {
+          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          const minutes = Math.floor(
+            (timeDifference % (1000 * 60 * 60)) / (1000 * 60),
+          );
+          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+          document.getElementById("days").innerText = String(days).padStart(
+            2,
+            "0",
+          );
+          document.getElementById("hours").innerText = String(hours).padStart(
+            2,
+            "0",
+          );
+          document.getElementById("minutes").innerText = String(
+            minutes,
+          ).padStart(2, "0");
+          document.getElementById("seconds").innerText = String(
+            seconds,
+          ).padStart(2, "0");
+        } else {
+          document.getElementById("countdown-title").innerText =
+            "CPCT Exam Status";
+          document.querySelector(".timer-grid").innerHTML =
+            "<h3 style='color: #10b981;'>Exam Day is Today / Completed!</h3>";
+        }
+      }
+
+      // Initialize and Update every second
+      updateISTClockAndCountdown();
+      setInterval(updateISTClockAndCountdown, 1000);
+    </script>
+  </body>
+</html>
