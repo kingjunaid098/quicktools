@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>100K Loan Tracker - Nitesh Pushpad</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-navy: #1e3a8a;
+        --soft-mint: #ecfdf5;
+        --soft-blue: #eff6ff;
+        --border-color: #e2e8f0;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --accent-green: #10b981;
+        --accent-blue: #2563eb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px 12px;
+        font-family: "Inter", sans-serif;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        color: var(--text-dark);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 28px 24px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border-color);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #3b82f6, var(--accent-green));
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .date-badge {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--accent-blue);
+        background: var(--soft-blue);
+        border: 1px solid #bfdbfe;
+        padding: 4px 12px;
+        border-radius: 100px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--primary-navy);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      .transaction-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        background: var(--soft-mint);
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #d1fae5;
+      }
+
+      .person-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-bottom: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .person-name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--primary-navy);
+      }
+
+      .section-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 16px 0 10px 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .stat-box {
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        background: #fff;
+      }
+
+      .stat-title {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .stat-val {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-dark);
+      }
+
+      .total-due-area {
+        background: var(--soft-blue);
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        border: 1px dashed #bfdbfe;
+        margin-top: 16px;
+      }
+
+      .total-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        display: block;
+        text-transform: uppercase;
+      }
+
+      .amount {
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: var(--primary-navy);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+
+      .timeline-badge {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 6px 14px;
+        background: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent-green);
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+
+      @media (max-width: 380px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .amount {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="mainCard" class="card">
+        <div class="header">
+          <h1>₹100K Lent to Nitesh Pushpad by Anoop Pushpad</h1>
+        </div>
+
+        <div id="transInfo" class="transaction-info">
+          <div>
+            <div class="person-label">Lender</div>
+            <div class="person-name">Anoop Pushpad</div>
+          </div>
+          <div style="color: #94a3b8; font-weight: bold">→</div>
+          <div style="text-align: right">
+            <div class="person-label">Borrower</div>
+            <div class="person-name">Nitesh Pushpad</div>
+          </div>
+        </div>
+
+        <!-- Section 1: Base Details -->
+        <div class="section-title">Loan Parameters</div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-title">Principal</span>
+            <span class="stat-val">₹1,00,000</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-title">Daily Interest</span>
+            <span class="stat-val" style="color: var(--accent-blue)"
+              >₹67.00</span
+            >
+          </div>
+        </div>
+
+        <!-- Section 2: Progress & Accruals -->
+        <div class="section-title">Timeline & Accruals</div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-title">Elapsed Days</span>
+            <span id="daysCount" class="stat-val">--</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-title">Remaining</span>
+            <span
+              id="daysLeft"
+              class="stat-val"
+              style="color: var(--accent-blue)"
+              >--</span
+            >
+          </div>
+          <div class="stat-box" style="grid-column: span 2">
+            <span class="stat-title">Accrued Interest</span>
+            <span
+              id="totalInterestVal"
+              class="stat-val"
+              style="color: var(--accent-blue)"
+              >₹0.00</span
+            >
+          </div>
+        </div>
+
+        <!-- Section 3: Payable Total -->
+        <div id="dueArea" class="total-due-area">
+          <span class="total-label">Total Payable (Principal + Interest)</span>
+          <div id="interestDisplay" class="amount">₹1,00,000.00</div>
+          <div class="timeline-badge" id="statusLabel">Updating...</div>
+        </div>
+
+        <footer>
+          <div class="date-badge">
+            Today: <span id="currentDateVal">--</span>
+          </div>
+          <br />
+          Lent: 1 August 2026 • Update Cycle: 12:00 AM IST
+
+          <br />
+          Deadline: 31 December 2026 (153 Days)
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      function calculateLoan() {
+        const principal = 100000;
+        const interestPerDay = 67;
+        const totalDuration = 153; // 31 July 2026 to 31 December 2026
+
+        const startDate = new Date("2026-07-31T00:00:00+05:30");
+
+        // Parse IST current date cleanly
+        const now = new Date();
+        const istFormatter = new Intl.DateTimeFormat("en-IN", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        });
+
+        // Set live header date string (e.g., "04 Aug 2026")
+        document.getElementById("currentDateVal").innerText =
+          istFormatter.format(now);
+
+        const partsFormatter = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+        const parts = partsFormatter.formatToParts(now);
+        const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+        const today = new Date(
+          `${map.year}-${map.month}-${map.day}T00:00:00+05:30`,
+        );
+
+        // Elapsed days calculation
+        const diffMs = today - startDate;
+        let daysPassed = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        if (daysPassed < 0) daysPassed = 0;
+
+        // Totals
+        const totalInterest = daysPassed * interestPerDay;
+        const totalPayable = principal + totalInterest;
+
+        // Remaining days
+        const daysRemaining = Math.max(0, totalDuration - daysPassed);
+
+        // Update Text Fields
+        document.getElementById("daysCount").innerText =
+          `${daysPassed} Day${daysPassed !== 1 ? "s" : ""}`;
+        document.getElementById("daysLeft").innerText =
+          `${daysRemaining} Day${daysRemaining !== 1 ? "s" : ""}`;
+
+        document.getElementById("totalInterestVal").innerText =
+          `₹${totalInterest.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`;
+
+        document.getElementById("interestDisplay").innerText =
+          `₹${totalPayable.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`;
+
+        document.getElementById("statusLabel").innerText =
+          `${daysPassed} of ${totalDuration} days completed`;
+      }
+
+      calculateLoan();
+      setInterval(calculateLoan, 30000);
+    </script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"9b42caf0aebb478ba6350de6ea1e2c07","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
