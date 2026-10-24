@@ -1,1 +1,458 @@
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Interest Tracker - Anoop to Akash</title>
+    <style>
+      :root {
+        --primary: #1a237e;
+        --primary-light: #283593;
+        --accent: #00c853;
+        --warning: #f57c00;
+        --danger: #d32f2f;
+        --text-main: #263238;
+        --text-muted: #78909c;
+        --bg: #f4f7f9;
+        --card-bg: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 20px 12px;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        color: var(--text-main);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: 24px;
+        padding: 28px 24px;
+        box-shadow: 0 16px 36px rgba(26, 35, 126, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        text-align: center;
+      }
+
+      .header {
+        border-bottom: 2px solid #f0f2f5;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+      }
+
+      h1 {
+        color: var(--primary);
+        font-size: 1.35rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 800;
+      }
+
+      .names-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 14px 18px;
+        border-radius: 14px;
+        margin-bottom: 18px;
+        font-size: 0.88rem;
+        border: 1px solid #eef2f5;
+      }
+
+      .person {
+        flex: 1;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .person span {
+        display: block;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--primary);
+        margin-top: 2px;
+      }
+
+      .arrow {
+        color: var(--accent);
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding: 0 12px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+      }
+
+      .status-badge.active {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
+      }
+
+      .status-badge.tier1 {
+        background: #fff3e0;
+        color: #ef6c00;
+        border: 1px solid #ffe0b2;
+      }
+
+      .status-badge.tier2 {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .stat-item {
+        background: #fafbfc;
+        padding: 12px 10px;
+        border-radius: 14px;
+        border: 1px solid #edf0f2;
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .stat-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .stat-value.highlight-danger {
+        color: var(--danger);
+      }
+
+      .stat-value.highlight-warning {
+        color: var(--warning);
+      }
+
+      .total-section {
+        background: linear-gradient(135deg, #1a237e, #283593);
+        color: white;
+        padding: 22px;
+        border-radius: 20px;
+        box-shadow: 0 10px 24px rgba(26, 35, 126, 0.22);
+      }
+
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 0.88rem;
+        opacity: 0.92;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+        padding-bottom: 6px;
+      }
+
+      .breakdown-row.penalty-row {
+        color: #ff8a80;
+        font-weight: 600;
+      }
+
+      .total-label {
+        font-size: 0.92rem;
+        font-weight: 600;
+        margin-top: 14px;
+        display: block;
+        opacity: 0.95;
+      }
+
+      .total-amount {
+        font-size: 2.1rem;
+        font-weight: 800;
+        margin: 4px 0 12px 0;
+        display: block;
+        letter-spacing: -0.5px;
+      }
+
+      .daily-tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.18);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        backdrop-filter: blur(4px);
+      }
+
+      .penalty-info-box {
+        margin-top: 18px;
+        background: #f8f9fa;
+        border-radius: 14px;
+        padding: 12px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-align: left;
+        border: 1px solid #edf0f2;
+      }
+
+      .penalty-info-box strong {
+        color: var(--text-main);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .penalty-info-box ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .penalty-info-box li {
+        margin-bottom: 3px;
+      }
+
+      footer {
+        margin-top: 16px;
+        font-size: 0.74rem;
+        color: var(--text-muted);
+      }
+
+      @media (max-width: 400px) {
+        .card {
+          padding: 20px 16px;
+        }
+        .total-amount {
+          font-size: 1.75rem;
+        }
+        .stat-value {
+          font-size: 0.92rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>₹35K Lended to Akash</h1>
+        </div>
+
+        <div class="names-box">
+          <div class="person">Lender<br /><span>Anoop</span></div>
+          <div class="arrow">➔</div>
+          <div class="person">Borrower<br /><span>Akash</span></div>
+        </div>
+
+        <div id="statusBadge" class="status-badge active">
+          Status: Calculating...
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-label">Principal</span>
+            <span class="stat-value">₹35,000</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Regular Interest</span>
+            <span class="stat-value">₹29 / day</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Start Date</span>
+            <span class="stat-value">14 Oct 2026</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Deadline</span>
+            <span class="stat-value">20 Nov 2026</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Days Elapsed</span>
+            <span id="daysCount" class="stat-value">--</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Current Rate</span>
+            <span id="currentRateDisplay" class="stat-value">₹29 / day</span>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="breakdown-row">
+            <span>Principal Amount:</span>
+            <span id="principalDisplay">₹35,000.00</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Base Interest (₹29/day):</span>
+            <span id="baseInterestDisplay">₹0.00</span>
+          </div>
+          <div class="breakdown-row penalty-row" id="penaltyBreakdownRow" style="display: none;">
+            <span id="penaltyLabel">Overdue Penalty:</span>
+            <span id="penaltyDisplay">₹0.00</span>
+          </div>
+
+          <span class="total-label">Total Amount Due</span>
+          <span id="totalDueDisplay" class="total-amount">₹35,000.00</span>
+
+          <div id="dailyRateTag" class="daily-tag">Daily Rate: +₹29.00 / day</div>
+        </div>
+
+        <div class="penalty-info-box">
+          <strong>Penalty Structure:</strong>
+          <ul>
+            <li><strong>Up to 20 Nov 2026:</strong> Regular Interest ₹29/day</li>
+            <li><strong>21 Nov – 30 Nov (Tier 1):</strong> +₹21/day penalty (Total ₹50/day)</li>
+            <li><strong>From 1 Dec (Tier 2):</strong> +₹71/day penalty (Total ₹100/day)</li>
+          </ul>
+        </div>
+
+        <footer>Live calculation based on India Standard Time (IST)</footer>
+      </div>
+    </div>
+
+    <script>
+      function calculateLoan() {
+        const principal = 35000;
+        const regularDailyInterest = 29;
+        const tier1PenaltyRate = 21; // Total = 29 + 21 = 50/day
+        const tier2PenaltyRate = 71; // Total = 29 + 71 = 100/day
+
+        // Key Milestone Dates in IST (+05:30)
+        const startDate = new Date("2026-10-14T00:00:00+05:30");
+        const deadlineDate = new Date("2026-11-20T23:59:59+05:30");
+        const tier1StartDate = new Date("2026-11-21T00:00:00+05:30");
+        const tier2StartDate = new Date("2026-12-01T00:00:00+05:30");
+
+        // Get Current Time in IST
+        const now = new Date();
+        const nowIST = new Date(
+          now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+        );
+
+        // Indian Currency Formatter
+        const currencyFormatter = new Intl.NumberFormat("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+
+        const diffInMs = nowIST - startDate;
+
+        // If the start date hasn't arrived yet
+        if (diffInMs < 0) {
+          document.getElementById("daysCount").innerText = "0 days";
+          document.getElementById("baseInterestDisplay").innerText = "₹0.00";
+          document.getElementById("totalDueDisplay").innerText = "₹35,000.00";
+          document.getElementById("statusBadge").className = "status-badge active";
+          document.getElementById("statusBadge").innerText = "Status: Not Started";
+          document.getElementById("penaltyBreakdownRow").style.display = "none";
+          document.getElementById("currentRateDisplay").innerText = "₹29 / day";
+          document.getElementById("dailyRateTag").innerText = "Daily Rate: +₹29.00 / day";
+          return;
+        }
+
+        // Total calendar days elapsed since start date (14 Oct 2026)
+        const totalDaysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        const baseInterest = totalDaysPassed * regularDailyInterest;
+
+        let tier1PenaltyDays = 0;
+        let tier2PenaltyDays = 0;
+        let totalPenalty = 0;
+
+        // Calculate Tier 1 Overdue Days (21 Nov 2026 to 30 Nov 2026)
+        if (nowIST >= tier1StartDate) {
+          if (nowIST < tier2StartDate) {
+            const tier1Ms = nowIST - tier1StartDate;
+            tier1PenaltyDays = Math.floor(tier1Ms / (1000 * 60 * 60 * 24)) + 1;
+          } else {
+            // Full 10 days of Tier 1 applied
+            tier1PenaltyDays = 10;
+          }
+        }
+
+        // Calculate Tier 2 Overdue Days (1 Dec 2026 onwards)
+        if (nowIST >= tier2StartDate) {
+          const tier2Ms = nowIST - tier2StartDate;
+          tier2PenaltyDays = Math.floor(tier2Ms / (1000 * 60 * 60 * 24)) + 1;
+        }
+
+        // Calculate Total Penalty
+        totalPenalty = (tier1PenaltyDays * tier1PenaltyRate) + (tier2PenaltyDays * tier2PenaltyRate);
+        const totalOverall = principal + baseInterest + totalPenalty;
+
+        // UI Updates
+        document.getElementById("daysCount").innerText = `${totalDaysPassed} day${totalDaysPassed !== 1 ? 's' : ''}`;
+        document.getElementById("baseInterestDisplay").innerText = `₹${currencyFormatter.format(baseInterest)}`;
+        document.getElementById("totalDueDisplay").innerText = `₹${currencyFormatter.format(totalOverall)}`;
+
+        const statusBadge = document.getElementById("statusBadge");
+        const penaltyRow = document.getElementById("penaltyBreakdownRow");
+        const dailyRateTag = document.getElementById("dailyRateTag");
+        const currentRateDisplay = document.getElementById("currentRateDisplay");
+
+        if (tier2PenaltyDays > 0) {
+          // Tier 2 Overdue Status (From 1 Dec 2026)
+          statusBadge.className = "status-badge tier2";
+          statusBadge.innerText = `Status: Tier 2 Overdue (${tier2PenaltyDays}d past 1 Dec)`;
+          
+          penaltyRow.style.display = "flex";
+          document.getElementById("penaltyLabel").innerText = `Late Penalty (T1: ₹210 + T2: ₹${tier2PenaltyDays * tier2PenaltyRate}):`;
+          document.getElementById("penaltyDisplay").innerText = `₹${currencyFormatter.format(totalPenalty)}`;
+
+          currentRateDisplay.innerText = "₹100 / day";
+          currentRateDisplay.className = "stat-value highlight-danger";
+          dailyRateTag.innerText = "Daily Rate: +₹100.00 / day (₹29 regular + ₹71 penalty)";
+        } else if (tier1PenaltyDays > 0) {
+          // Tier 1 Overdue Status (21 Nov to 30 Nov 2026)
+          statusBadge.className = "status-badge tier1";
+          statusBadge.innerText = `Status: Tier 1 Overdue (${tier1PenaltyDays} day${tier1PenaltyDays !== 1 ? 's' : ''})`;
+          
+          penaltyRow.style.display = "flex";
+          document.getElementById("penaltyLabel").innerText = `Tier 1 Penalty (${tier1PenaltyDays}d × ₹21):`;
+          document.getElementById("penaltyDisplay").innerText = `₹${currencyFormatter.format(totalPenalty)}`;
+
+          currentRateDisplay.innerText = "₹50 / day";
+          currentRateDisplay.className = "stat-value highlight-warning";
+          dailyRateTag.innerText = "Daily Rate: +₹50.00 / day (₹29 regular + ₹21 penalty)";
+        } else {
+          // Normal Period (Within deadline)
+          statusBadge.className = "status-badge active";
+          statusBadge.innerText = "Status: Active (Within Deadline)";
+          penaltyRow.style.display = "none";
+          currentRateDisplay.innerText = "₹29 / day";
+          currentRateDisplay.className = "stat-value";
+          dailyRateTag.innerText = "Daily Rate: +₹29.00 / day";
+        }
+      }
+
+      // Initial execution
+      calculateLoan();
+
+      // Refresh calculation every hour
+      setInterval(calculateLoan, 3600000);
+    </script>
+  </body>
+</html>
