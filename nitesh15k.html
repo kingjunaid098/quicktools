@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Loan Tracker: Anoop to Nitesh</title>
+    <style>
+      :root {
+        --primary: #1a237e;
+        --accent: #00c853;
+        --warning: #f57c00;
+        --danger: #d32f2f;
+        --text-main: #37474f;
+        --bg: #f4f7f9;
+      }
+
+      body {
+        margin: 0;
+        padding: 20px 0;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .container {
+        width: 95%;
+        max-width: 450px;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 25px 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        text-align: center;
+      }
+
+      .header {
+        border-bottom: 2px solid #f0f2f5;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+      }
+
+      h1 {
+        color: var(--primary);
+        font-size: 1.1rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .names-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+      }
+
+      .person span {
+        display: block;
+        font-weight: bold;
+        color: var(--primary);
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 15px;
+      }
+
+      .stat-item {
+        background: #fff;
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid #edf0f2;
+      }
+
+      .stat-label {
+        font-size: 0.65rem;
+        color: #78909c;
+        display: block;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .stat-value {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .total-section {
+        background: linear-gradient(135deg, #1a237e, #283593);
+        color: white;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+        margin-bottom: 15px;
+      }
+
+      .total-amount {
+        font-size: 2.1rem;
+        font-weight: 800;
+        margin: 5px 0;
+        display: block;
+      }
+
+      .footer-note {
+        font-size: 0.75rem;
+        color: #90a4ae;
+        margin-top: 15px;
+      }
+
+      .progress-container {
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 600;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>15K Loan Settlement Tracker</h1>
+        </div>
+
+        <div class="names-box">
+          <div class="person">Lender<br /><span>Anoop Pushpad</span></div>
+          <div style="font-weight: bold; color: var(--accent)">➔</div>
+          <div class="person">Borrower<br /><span>Nitesh Pushpad</span></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-label">Principal</span>
+            <span class="stat-value">₹15,000</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Daily Interest</span>
+            <span class="stat-value">₹11.50</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Interest So Far</span>
+            <span id="interestSoFar" class="stat-value">₹0.00</span>
+          </div>
+          <div
+            class="stat-item"
+            style="border-color: #ffcdd2; background: #fff8f8"
+          >
+            <span class="stat-label" style="color: var(--danger)"
+              >Penalty So Far (₹20/day)</span
+            >
+            <span
+              id="penaltySoFar"
+              class="stat-value"
+              style="color: var(--danger)"
+              >₹0.00</span
+            >
+          </div>
+        </div>
+
+        <div class="total-section">
+          <span style="font-size: 0.85rem; opacity: 0.9"
+            >Current Amount Payable</span
+          >
+          <span id="totalDisplay" class="total-amount">₹15,000.00</span>
+          <div
+            style="
+              font-size: 0.75rem;
+              background: rgba(255, 255, 255, 0.15);
+              padding: 6px;
+              border-radius: 6px;
+              margin-top: 10px;
+            "
+          >
+            Agreement: 10 May 2026 — 14 Jul 2026<br />
+            <span style="opacity: 0.85; font-size: 0.7rem"
+              >(Penalty active since 14 July 2026)</span
+            >
+          </div>
+        </div>
+
+        <div id="statusLabel" class="progress-container">Calculating...</div>
+        <div class="footer-note">Updates automatically based on IST</div>
+      </div>
+    </div>
+
+    <script>
+      function calculateLoan() {
+        const principal = 15000;
+        const interestPerDay = 11.5;
+        const penaltyPerDay = 20.0;
+
+        // Key Dates
+        const start = new Date("2026-05-09T00:00:00+05:30");
+        const penaltyStart = new Date("2026-07-14T00:00:00+05:30");
+
+        // Current Time in IST
+        const now = new Date();
+        const nowIST = new Date(
+          now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+        );
+        const todayStart = new Date(
+          nowIST.getFullYear(),
+          nowIST.getMonth(),
+          nowIST.getDate(),
+        );
+
+        // Days elapsed since start date (unbounded, continuous till paid)
+        let totalDaysPassed = Math.floor(
+          (todayStart - start) / (1000 * 60 * 60 * 24),
+        );
+        if (totalDaysPassed < 0) totalDaysPassed = 0;
+
+        // Days past penalty date
+        let penaltyDaysPassed = Math.floor(
+          (todayStart - penaltyStart) / (1000 * 60 * 60 * 24),
+        );
+        if (penaltyDaysPassed < 0) penaltyDaysPassed = 0;
+
+        // Financial Calculations
+        const totalInterest = totalDaysPassed * interestPerDay;
+        const totalPenalty = penaltyDaysPassed * penaltyPerDay;
+        const finalAmount = principal + totalInterest + totalPenalty;
+
+        // Format Currency Helper
+        const formatINR = (amount) =>
+          `₹${amount.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`;
+
+        // Update UI
+        document.getElementById("interestSoFar").innerText =
+          formatINR(totalInterest);
+        document.getElementById("penaltySoFar").innerText =
+          formatINR(totalPenalty);
+        document.getElementById("totalDisplay").innerText =
+          formatINR(finalAmount);
+
+        // Status Feedback
+        const statusLabel = document.getElementById("statusLabel");
+        if (penaltyDaysPassed > 0) {
+          statusLabel.innerText = `Penalty Active: Overdue by ${penaltyDaysPassed} Day${penaltyDaysPassed > 1 ? "s" : ""}`;
+          statusLabel.style.color = "var(--danger)";
+        } else {
+          statusLabel.innerText = `Days Elapsed: ${totalDaysPassed} Days`;
+          statusLabel.style.color = "var(--primary)";
+        }
+      }
+
+      calculateLoan();
+      setInterval(calculateLoan, 60000); // Refresh every minute
+    </script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"9b42caf0aebb478ba6350de6ea1e2c07","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
