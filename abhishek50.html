@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Interest Tracker</title>
+    <style>
+      :root {
+        --primary: #1a237e;
+        --accent: #00c853;
+        --text-main: #37474f;
+        --bg: #f4f7f9;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 95%;
+        max-width: 450px;
+        perspective: 1000px;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        text-align: center;
+      }
+
+      .header {
+        border-bottom: 2px solid #f0f2f5;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+      }
+
+      h1 {
+        color: var(--primary);
+        font-size: 1.4rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .names-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        font-size: 0.9rem;
+      }
+
+      .person {
+        flex: 1;
+      }
+
+      .person span {
+        display: block;
+        font-weight: bold;
+        color: var(--primary);
+      }
+
+      .arrow {
+        color: var(--accent);
+        font-weight: bold;
+        padding: 0 10px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .stat-item {
+        background: #fff;
+        padding: 15px;
+        border-radius: 15px;
+        border: 1px solid #edf0f2;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: #78909c;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .total-section {
+        background: linear-gradient(135deg, #1a237e, #283593);
+        color: white;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+      }
+
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+        padding-bottom: 8px;
+      }
+
+      .total-label {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 15px;
+        display: block;
+      }
+
+      .total-amount {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 5px 0 15px 0;
+        display: block;
+      }
+
+      .daily-tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+      }
+
+      footer {
+        margin-top: 20px;
+        font-size: 0.75rem;
+        color: #90a4ae;
+      }
+
+      /* Mobile specific adjustments */
+      @media (max-width: 400px) {
+        .card {
+          padding: 20px;
+        }
+        .total-amount {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h1>50K Lended to Charan Pushpad</h1>
+        </div>
+
+        <div class="names-box">
+          <div class="person">Lender<br /><span>Anoop Pushpad</span></div>
+          <div class="arrow">➔</div>
+          <div class="person">Borrower<br /><span>Charan Pushpad</span></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-label">Principal</span>
+            <span class="stat-value">₹50,000</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Monthly Rate</span>
+            <span class="stat-value">2%</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Lending Date</span>
+            <span class="stat-value">30 May 2025</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Days Elapsed</span>
+            <span id="daysCount" class="stat-value">--</span>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="breakdown-row">
+            <span>Principal Amount:</span>
+            <span id="principalDisplay">₹50,000.00</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Interest Accrued:</span>
+            <span id="interestDisplay">₹0.00</span>
+          </div>
+
+          <span class="total-label">Total Amount Due</span>
+          <span id="totalDueDisplay" class="total-amount">₹50,000.00</span>
+
+          <div class="daily-tag">Daily Rate: +₹33.33</div>
+        </div>
+
+        <footer>Live calculation based on current IST time</footer>
+      </div>
+    </div>
+
+    <script>
+      function calculateLoan() {
+        const principal = 50000;
+        const monthlyRate = 0.02; // 2%
+        // Daily interest based on 30-day standard month (₹1000 / 30)
+        const interestPerDay = (principal * monthlyRate) / 30;
+
+        // Lending Date: May 30, 2025
+        const startDate = new Date("2025-05-29T00:00:00+05:30");
+
+        // Get Current Time in India (IST)
+        const now = new Date();
+        const nowIST = new Date(
+          now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+        );
+
+        // Calculate Difference
+        const diffInMs = nowIST - startDate;
+
+        // If the date hasn't reached yet, reset metrics
+        if (diffInMs < 0) {
+          document.getElementById("daysCount").innerText = "0";
+          document.getElementById("interestDisplay").innerText = "₹0.00";
+          document.getElementById("totalDueDisplay").innerText = "₹50,000.00";
+          return;
+        }
+
+        const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        const totalInterest = daysPassed * interestPerDay;
+        const totalOverall = principal + totalInterest;
+
+        // Formatter config
+        const currencyFormatter = new Intl.NumberFormat("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+
+        // Update UI
+        document.getElementById("daysCount").innerText = daysPassed;
+        document.getElementById("interestDisplay").innerText =
+          `₹${currencyFormatter.format(totalInterest)}`;
+        document.getElementById("totalDueDisplay").innerText =
+          `₹${currencyFormatter.format(totalOverall)}`;
+      }
+
+      // Run on load
+      calculateLoan();
+
+      // Refresh every hour to keep days/interest accurate
+      setInterval(calculateLoan, 3600000);
+    </script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"9b42caf0aebb478ba6350de6ea1e2c07","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
