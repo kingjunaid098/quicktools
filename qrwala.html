@@ -10,7 +10,7 @@
 <style>
 :root {
   --primary: #7028c7;
-  --primary-dark: #4e1594;
+  --primary-dark: #51169b;
   --bg: #f6f5fb;
   --text: #201b2c;
   --muted: #777286;
@@ -19,9 +19,7 @@
   --danger: #c03945;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -35,9 +33,7 @@ body {
     var(--bg);
 }
 
-button, input {
-  font: inherit;
-}
+button, input { font: inherit; }
 
 button {
   -webkit-tap-highlight-color: transparent;
@@ -66,10 +62,7 @@ button {
   box-shadow: 0 9px 24px #7028c733;
 }
 
-.logo svg {
-  width: 33px;
-  height: 33px;
-}
+.logo svg { width: 33px; height: 33px; }
 
 .header h1 {
   font-size: clamp(25px, 6vw, 31px);
@@ -111,10 +104,7 @@ button {
   color: var(--primary);
 }
 
-.heading-icon svg {
-  width: 22px;
-  height: 22px;
-}
+.heading-icon svg { width: 22px; height: 22px; }
 
 .section-heading h2 {
   margin: 0 0 4px;
@@ -159,10 +149,7 @@ button {
   border-radius: 16px;
 }
 
-.upload-icon svg {
-  width: 26px;
-  height: 26px;
-}
+.upload-icon svg { width: 26px; height: 26px; }
 
 .upload-title {
   font-weight: 700;
@@ -185,20 +172,15 @@ button {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: background .2s, transform .2s;
 }
 
-.browse-button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-}
+.browse-button:hover { background: var(--primary-dark); }
 
 #qrInput {
   position: absolute;
   width: 1px;
   height: 1px;
   opacity: 0;
-  pointer-events: none;
 }
 
 .file-info {
@@ -212,13 +194,7 @@ button {
   font-size: 12px;
 }
 
-.file-info.visible {
-  display: flex;
-}
-
-.file-icon {
-  color: var(--primary);
-}
+.file-info.visible { display: flex; }
 
 .file-name {
   flex: 1;
@@ -241,24 +217,10 @@ button {
   line-height: 1.5;
 }
 
-.message.visible {
-  display: block;
-}
-
-.message.error {
-  color: var(--danger);
-  background: #fff0f0;
-}
-
-.message.success {
-  color: var(--success);
-  background: #eaf8ef;
-}
-
-.message.info {
-  color: #6541a0;
-  background: #f2ebff;
-}
+.message.visible { display: block; }
+.message.error { color: var(--danger); background: #fff0f0; }
+.message.success { color: var(--success); background: #eaf8ef; }
+.message.info { color: #6541a0; background: #f2ebff; }
 
 .security-note {
   display: flex;
@@ -277,9 +239,7 @@ button {
   color: var(--success);
 }
 
-#canvas {
-  display: none;
-}
+#canvas { display: none; }
 
 .results {
   display: none;
@@ -287,9 +247,7 @@ button {
   animation: appear .3s ease;
 }
 
-.results.visible {
-  display: block;
-}
+.results.visible { display: block; }
 
 @keyframes appear {
   from { opacity: 0; transform: translateY(8px); }
@@ -300,13 +258,11 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 15px;
 }
 
-.result-top h2 {
-  margin: 0;
-  font-size: 17px;
-}
+.result-top h2 { margin: 0; font-size: 17px; }
 
 .verified {
   display: inline-flex;
@@ -346,10 +302,7 @@ button {
   text-transform: uppercase;
 }
 
-.payee-main {
-  min-width: 0;
-  flex: 1;
-}
+.payee-main { min-width: 0; flex: 1; }
 
 .field-label {
   margin-bottom: 5px;
@@ -372,9 +325,9 @@ button {
   border-top: 1px solid var(--border);
 }
 
+.upi-details { flex: 1; min-width: 0; }
+
 .upi-value {
-  flex: 1;
-  min-width: 0;
   overflow-wrap: anywhere;
   font-size: 13px;
   font-weight: 600;
@@ -385,20 +338,20 @@ button {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 8px 10px;
+  flex-shrink: 0;
+  padding: 9px 11px;
   color: var(--primary);
   background: #f2eaff;
   border: 0;
   border-radius: 9px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
-.copy-button svg {
-  width: 14px;
-  height: 14px;
-}
+.copy-button:hover { background: #e8dcff; }
+
+.copy-button svg { width: 14px; height: 14px; }
 
 .pay-heading {
   margin: 23px 0 12px;
@@ -415,7 +368,7 @@ button {
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 57px;
+  min-height: 60px;
   gap: 12px;
   padding: 10px 13px;
   border: 1px solid var(--border);
@@ -435,32 +388,19 @@ button {
 .app-logo {
   display: grid;
   place-items: center;
-  width: 37px;
-  height: 37px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
   border-radius: 11px;
   font-size: 20px;
   font-weight: 800;
 }
 
-.phonepe-logo {
-  color: white;
-  background: #5f259f;
-}
+.phonepe-logo { color: white; background: #5f259f; }
+.gpay-logo { color: #4285f4; background: #f0f5ff; }
+.paytm-logo { color: #00a8df; background: #eafaff; }
 
-.gpay-logo {
-  color: #4285f4;
-  background: #f0f5ff;
-}
-
-.paytm-logo {
-  color: #00a8df;
-  background: #eafaff;
-}
-
-.pay-copy {
-  flex: 1;
-}
+.pay-copy { flex: 1; }
 
 .pay-name {
   display: block;
@@ -493,9 +433,7 @@ button {
   cursor: pointer;
 }
 
-.reset-button:hover {
-  background: #eee9f5;
-}
+.reset-button:hover { background: #eee9f5; }
 
 .footer {
   margin: 22px 0 0;
@@ -505,27 +443,13 @@ button {
   text-align: center;
 }
 
-.footer strong {
-  color: #6e667c;
-}
+.footer strong { color: #6e667c; }
 
 @media (max-width: 480px) {
-  body {
-    padding: 25px 12px;
-  }
-
-  .card {
-    padding: 19px;
-    border-radius: 20px;
-  }
-
-  .header {
-    margin-bottom: 21px;
-  }
-
-  .upload-area {
-    min-height: 170px;
-  }
+  body { padding: 25px 12px; }
+  .card { padding: 19px; border-radius: 20px; }
+  .header { margin-bottom: 21px; }
+  .upload-area { min-height: 170px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -551,9 +475,9 @@ button {
         <path d="M14 14h3v3h-3zM20 14v2M14 20h2M20 19v2M18 21h3"/>
       </svg>
     </div>
-    <h1>UPI Payment Helper</h1>
-    <p>Upload a payment QR code, verify the recipient<br>
-       and continue with your preferred UPI app.</p>
+    <h1>UPI QR Helper</h1>
+    <p>Upload a QR image, extract the UPI ID<br>
+       and copy it into your preferred payment app.</p>
   </header>
 
   <section class="card">
@@ -568,7 +492,7 @@ button {
       </div>
       <div>
         <h2>Upload QR code</h2>
-        <p>Choose an image containing a UPI QR code</p>
+        <p>Select an image containing a UPI QR code</p>
       </div>
     </div>
 
@@ -590,7 +514,7 @@ button {
     <input type="file" accept="image/*" id="qrInput">
 
     <div class="file-info" id="fileInfo">
-      <span class="file-icon">▧</span>
+      <span aria-hidden="true">▧</span>
       <span class="file-name" id="fileName"></span>
       <span class="file-size" id="fileSize"></span>
     </div>
@@ -603,7 +527,7 @@ button {
     <div class="results" id="results">
 
       <div class="result-top">
-        <h2>Payment details</h2>
+        <h2>Extracted details</h2>
         <span class="verified">✓ QR READ</span>
       </div>
 
@@ -617,10 +541,11 @@ button {
         </div>
 
         <div class="upi-row">
-          <div style="flex:1;min-width:0">
+          <div class="upi-details">
             <div class="field-label">UPI ID</div>
             <div class="upi-value" id="upiText"></div>
           </div>
+
           <button class="copy-button" id="copyButton" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="1.8" stroke-linecap="round"
@@ -628,12 +553,12 @@ button {
               <rect x="8" y="8" width="12" height="12" rx="2"/>
               <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
             </svg>
-            Copy
+            <span id="copyLabel">Copy UPI ID</span>
           </button>
         </div>
       </div>
 
-      <h3 class="pay-heading">Choose payment app</h3>
+      <h3 class="pay-heading">Open a payment app</h3>
 
       <div class="payment-list">
 
@@ -641,7 +566,7 @@ button {
           <span class="app-logo phonepe-logo">पे</span>
           <span class="pay-copy">
             <span class="pay-name">PhonePe</span>
-            <span class="pay-description">Continue with PhonePe</span>
+            <span class="pay-description">Open PhonePe and paste the UPI ID</span>
           </span>
           <span class="pay-arrow">›</span>
         </button>
@@ -650,16 +575,16 @@ button {
           <span class="app-logo gpay-logo">G</span>
           <span class="pay-copy">
             <span class="pay-name">Google Pay</span>
-            <span class="pay-description">Continue with Google Pay</span>
+            <span class="pay-description">Open Google Pay and paste the UPI ID</span>
           </span>
           <span class="pay-arrow">›</span>
         </button>
 
         <button class="pay-button" id="paytmButton" type="button">
-          <span class="app-logo paytm-logo">₿</span>
+          <span class="app-logo paytm-logo">P</span>
           <span class="pay-copy">
             <span class="pay-name">Paytm</span>
-            <span class="pay-description">Continue with Paytm</span>
+            <span class="pay-description">Open Paytm and paste the UPI ID</span>
           </span>
           <span class="pay-arrow">›</span>
         </button>
@@ -679,15 +604,17 @@ button {
         <path d="m9 12 2 2 4-4"/>
       </svg>
       <span>QR images are processed locally in your browser.
-      No QR image is uploaded to a server by this page.
-      Always verify the recipient before authorizing a payment.</span>
+      This page does not upload QR images to its own server.
+      Always verify the recipient and payment amount before paying.</span>
     </div>
 
   </section>
 
   <footer class="footer">
-    <strong>UPI Payment Helper</strong><br>
-    This tool is independent and is not affiliated with any payment app.
+    <strong>UPI QR Helper</strong><br>
+    Independent utility. Not affiliated with PhonePe,
+    Google Pay, Paytm or any bank.
+    <br>Opening an app does not initiate or confirm a payment.
   </footer>
 
 </main>
@@ -711,17 +638,30 @@ const nameText = document.getElementById("nameText");
 const upiText = document.getElementById("upiText");
 const avatar = document.getElementById("avatar");
 const copyButton = document.getElementById("copyButton");
+const copyLabel = document.getElementById("copyLabel");
 
 let extractedUPI = "";
 let extractedName = "";
 let imageURL = null;
+let messageTimer = null;
+let copyTimer = null;
 
 function showMessage(text, type = "info") {
+  clearTimeout(messageTimer);
   message.textContent = text;
   message.className = "message visible " + type;
 }
 
+function showTemporaryMessage(text, type = "success") {
+  showMessage(text, type);
+  messageTimer = setTimeout(() => {
+    message.className = "message";
+    message.textContent = "";
+  }, 4000);
+}
+
 function hideMessage() {
+  clearTimeout(messageTimer);
   message.textContent = "";
   message.className = "message";
 }
@@ -746,16 +686,14 @@ input.addEventListener("change", () => {
 function processFile(file) {
   hideMessage();
   results.classList.remove("visible");
-
   extractedUPI = "";
   extractedName = "";
 
   if (!file.type.startsWith("image/")) {
-    showMessage("Please choose a valid image file.", "error");
+    showMessage("Please select a valid image file.", "error");
     return;
   }
 
-  // Avoid loading unnecessarily large images into memory.
   if (file.size > 15 * 1024 * 1024) {
     showMessage("Image is too large. Please choose an image under 15 MB.", "error");
     return;
@@ -775,12 +713,17 @@ function processFile(file) {
   clearImageURL();
   imageURL = URL.createObjectURL(file);
 
+  const currentURL = imageURL;
   const img = new Image();
 
   img.onload = () => {
+    if (currentURL !== imageURL) return;
+
     try {
-      // Limit processing dimensions to reduce memory use.
-      const scale = Math.min(1, 2000 / Math.max(img.width, img.height));
+      const scale = Math.min(
+        1, 2000 / Math.max(img.width, img.height)
+      );
+
       canvas.width = Math.max(1, Math.round(img.width * scale));
       canvas.height = Math.max(1, Math.round(img.height * scale));
 
@@ -799,7 +742,7 @@ function processFile(file) {
 
       if (!code) {
         showMessage(
-          "No QR code detected. Try a clearer, well-lit image with the entire QR code visible.",
+          "No QR code detected. Try a clearer image with the entire QR code visible.",
           "error"
         );
         return;
@@ -808,18 +751,19 @@ function processFile(file) {
       parseQR(code.data);
     } catch (error) {
       showMessage(
-        "Could not read this image. Try another image in JPG or PNG format.",
+        "Could not read this image. Please try another JPG or PNG image.",
         "error"
       );
     }
   };
 
   img.onerror = () => {
+    if (currentURL !== imageURL) return;
     showMessage("Unable to open this image. Please try another file.", "error");
     clearImageURL();
   };
 
-  img.src = imageURL;
+  img.src = currentURL;
 }
 
 function parseQR(data) {
@@ -832,7 +776,10 @@ function parseQR(data) {
     return;
   }
 
-  if (url.protocol !== "upi:" || url.hostname.toLowerCase() !== "pay") {
+  if (
+    url.protocol !== "upi:" ||
+    url.hostname.toLowerCase() !== "pay"
+  ) {
     showMessage("This QR code is not a standard UPI payment QR.", "error");
     return;
   }
@@ -853,71 +800,99 @@ function parseQR(data) {
   avatar.textContent = [...extractedName.trim()][0] || "U";
 
   results.classList.add("visible");
+
   showMessage(
-    "QR code read successfully. Verify the recipient details before continuing.",
+    "QR code read successfully. Copy the UPI ID or open a payment app below.",
     "success"
   );
 
-  results.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  results.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
 }
 
-function buildPaymentURL(app) {
-  if (!extractedUPI) {
-    showMessage("Please scan a UPI QR code first.", "error");
-    return null;
-  }
-
-  const params = new URLSearchParams();
-  params.set("pa", extractedUPI);
-  params.set("pn", extractedName);
-  params.set("cu", "INR");
-
-  // Retain the amount when one is present in the original QR.
-  // Payment details may vary between UPI applications.
-  return app + params.toString();
-}
-
-function launchPayment(app) {
-  const url = buildPaymentURL(app);
-  if (!url) return;
-
-  showMessage(
-    "Opening your payment app. Verify the recipient and amount in the app before paying.",
-    "info"
-  );
-
-  window.location.href = url;
-}
-
-document.getElementById("phonepeButton").addEventListener("click", () => {
-  launchPayment("phonepe://pay?");
-});
-
-document.getElementById("gpayButton").addEventListener("click", () => {
-  launchPayment("tez://upi/pay?");
-});
-
-document.getElementById("paytmButton").addEventListener("click", () => {
-  launchPayment("paytmmp://pay?");
-});
-
-copyButton.addEventListener("click", async () => {
+// Copy only the UPI ID. No payment is initiated.
+async function copyUPI() {
   if (!extractedUPI) return;
 
   try {
-    await navigator.clipboard.writeText(extractedUPI);
-    copyButton.lastChild.textContent = " Copied!";
-    showMessage("UPI ID copied to clipboard.", "success");
+    if (!navigator.clipboard || !window.isSecureContext) {
+      throw new Error("Clipboard unavailable");
+    }
 
-    setTimeout(() => {
-      copyButton.lastChild.textContent = " Copy";
-    }, 1800);
+    await navigator.clipboard.writeText(extractedUPI);
+    copyLabel.textContent = "Copied!";
+
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
+      copyLabel.textContent = "Copy UPI ID";
+    }, 2000);
+
+    showTemporaryMessage("UPI ID copied. Paste it into your payment app.", "success");
   } catch {
-    showMessage(
-      "Clipboard access was blocked. Select and copy the UPI ID manually.",
-      "error"
-    );
+    // Fallback for browsers with limited clipboard support.
+    const textArea = document.createElement("textarea");
+    textArea.value = extractedUPI;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    let copied = false;
+
+    try {
+      copied = document.execCommand("copy");
+    } catch {
+      copied = false;
+    }
+
+    textArea.remove();
+
+    if (copied) {
+      copyLabel.textContent = "Copied!";
+      showTemporaryMessage("UPI ID copied. Paste it into your payment app.", "success");
+
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => {
+        copyLabel.textContent = "Copy UPI ID";
+      }, 2000);
+    } else {
+      showMessage(
+        "Automatic copying was blocked. Select the displayed UPI ID and copy it manually.",
+        "error"
+      );
+    }
   }
+}
+
+copyButton.addEventListener("click", copyUPI);
+
+// These buttons open the app only.
+// They do NOT pass the UPI ID, amount, or payment details to the app.
+function openPaymentApp(scheme, appName) {
+  showTemporaryMessage(
+    "Activity started: attempting to open " + appName +
+    ". If it opens, paste the copied UPI ID manually.",
+    "info"
+  );
+
+  // Deliberately no UPI payment parameters in these URLs.
+  window.location.href = scheme;
+}
+
+document.getElementById("phonepeButton").addEventListener("click", () => {
+  openPaymentApp("phonepe://", "PhonePe");
+});
+
+document.getElementById("gpayButton").addEventListener("click", () => {
+  openPaymentApp("tez://", "Google Pay");
+});
+
+document.getElementById("paytmButton").addEventListener("click", () => {
+  openPaymentApp("paytmmp://", "Paytm");
 });
 
 document.getElementById("resetButton").addEventListener("click", () => {
@@ -925,16 +900,25 @@ document.getElementById("resetButton").addEventListener("click", () => {
   extractedUPI = "";
   extractedName = "";
 
+  clearTimeout(copyTimer);
+  copyLabel.textContent = "Copy UPI ID";
+
   clearImageURL();
   fileInfo.classList.remove("visible");
   results.classList.remove("visible");
   hideMessage();
 
+  fileName.textContent = "";
+  fileSize.textContent = "";
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   canvas.width = 0;
   canvas.height = 0;
 
-  uploadArea.scrollIntoView({ behavior: "smooth", block: "center" });
+  uploadArea.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 });
 
 // Drag-and-drop support
@@ -956,10 +940,7 @@ uploadArea.addEventListener("drop", event => {
   const file = event.dataTransfer.files &&
                event.dataTransfer.files[0];
 
-  if (file) {
-    // Process the dropped file without depending on input.files assignment.
-    processFile(file);
-  }
+  if (file) processFile(file);
 });
 
 window.addEventListener("beforeunload", clearImageURL);
