@@ -1,27 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>QuickTools — Directory</title>
-
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5109/5109515.png">
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: #0d1117;
       color: #e6edf3;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     .top {
@@ -46,14 +39,11 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-
       background: #161b22;
       border: 1px solid #30363d;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-size: 20px;
     }
 
@@ -65,12 +55,9 @@
 
     .badge {
       padding: 3px 9px;
-
       border: 1px solid #30363d;
       border-radius: 20px;
-
       color: #8b949e;
-
       font-size: 12px;
     }
 
@@ -83,9 +70,7 @@
     .directory {
       border: 1px solid #30363d;
       border-radius: 7px;
-
       overflow: hidden;
-
       background: #0d1117;
     }
 
@@ -93,14 +78,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       padding: 14px 18px;
-
       background: #161b22;
       border-bottom: 1px solid #30363d;
-
       color: #8b949e;
-
       font-size: 14px;
     }
 
@@ -113,156 +94,93 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       padding: 16px 18px;
-
       border-bottom: 1px solid #21262d;
-
       color: #e6edf3;
       text-decoration: none;
-
-      transition:
-        background 0.15s ease,
-        transform 0.1s ease;
+      transition: background 0.15s ease, transform 0.1s ease;
     }
 
-    .file:last-child {
-      border-bottom: none;
-    }
-
-    .file:hover {
-      background: #161b22;
-    }
-
-    .file:active {
-      transform: scale(0.998);
-    }
+    .file:last-child { border-bottom: none; }
+    .file:hover { background: #161b22; }
+    .file:active { transform: scale(0.998); }
 
     .file-left {
       display: flex;
       align-items: center;
-
       gap: 14px;
-
       min-width: 0;
     }
 
     .icon {
       width: 28px;
-
       flex-shrink: 0;
-
       text-align: center;
-
       font-size: 19px;
     }
 
-    .file-info {
-      min-width: 0;
-    }
+    .file-info { min-width: 0; }
 
     .filename {
       display: block;
-
       color: #58a6ff;
-
       font-size: 15px;
-
       word-break: break-word;
     }
 
     .description {
       display: inline-block;
-
       color: #8b949e;
-
       font-size: 13px;
-
       margin-top: 4px;
     }
 
     .actual-file {
       display: block;
-
       color: #6e7681;
-
       font-size: 12px;
-
       margin-top: 3px;
-
       word-break: break-all;
     }
 
     .arrow {
       flex-shrink: 0;
-
       color: #8b949e;
-
       font-size: 18px;
-
       margin-left: 15px;
     }
 
     .status {
       padding: 25px;
-
       color: #8b949e;
-
       text-align: center;
-
       font-size: 14px;
     }
 
-    .error {
-      color: #f85149;
-    }
-
-    .loading {
-      animation: pulse 1.5s infinite;
-    }
+    .error { color: #f85149; }
+    .loading { animation: pulse 1.5s infinite; }
 
     @keyframes pulse {
-      0% {
-        opacity: 0.45;
-      }
-
-      50% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0.45;
-      }
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 1; }
     }
 
     footer {
       margin-top: 25px;
-
       color: #6e7681;
-
       font-size: 13px;
-
       text-align: center;
     }
 
     @media (max-width: 600px) {
-
       .container {
         width: calc(100% - 20px);
         margin: 25px auto;
       }
 
-      .header {
-        margin-bottom: 22px;
-      }
-
-      h1 {
-        font-size: 21px;
-      }
-
-      .file {
-        padding: 14px;
-      }
+      .header { margin-bottom: 22px; }
+      h1 { font-size: 21px; }
+      .file { padding: 14px; }
 
       .description {
         display: block;
@@ -272,706 +190,199 @@
   </style>
 </head>
 
-
 <body>
-
   <div class="top"></div>
 
-
   <div class="container">
-
-
-    <!-- HEADER -->
-
     <div class="header">
-
-      <div class="logo">
-        ⚙
-      </div>
-
-      <h1>
-        quicktools
-      </h1>
-
-      <span class="badge">
-        Directory
-      </span>
-
+      <div class="logo">⚙</div>
+      <h1>quicktools</h1>
+      <span class="badge">Directory</span>
     </div>
 
-
-    <!-- PATH -->
-
-    <div class="path">
-      📁 /quicktools
-    </div>
-
-
-    <!-- DIRECTORY -->
+    <div class="path">📁 /quicktools</div>
 
     <div class="directory">
-
-
       <div class="directory-header">
-
-        <span>
-          Repository files
-        </span>
-
-        <span
-          id="count"
-          class="count">
-        </span>
-
+        <span>HTML pages</span>
+        <span id="count" class="count"></span>
       </div>
 
-
-      <div
-        id="files"
-        class="status loading">
-
-        Loading files...
-
+      <div id="files" class="status loading">
+        Loading HTML files...
       </div>
-
-
     </div>
 
-
-    <footer>
-      Automatically updated from GitHub
-    </footer>
-
-
+    <footer>Automatically updated from GitHub</footer>
   </div>
 
-
   <script>
-
     /*
-     * GitHub repository
+     * GitHub repository settings
      */
-
     const OWNER = "kingjunaid098";
-
     const REPO = "quicktools";
-
     const BRANCH = "main";
 
+    const filesContainer = document.getElementById("files");
+    const countElement = document.getElementById("count");
 
     /*
-     * Elements
+     * Load only HTML files from GitHub
      */
-
-    const filesContainer =
-      document.getElementById("files");
-
-    const countElement =
-      document.getElementById("count");
-
-
-    /*
-     * Load repository
-     */
-
     async function loadDirectory() {
-
       try {
-
-        /*
-         * GitHub Tree API
-         *
-         * recursive=1 means folders
-         * and their files are included.
-         */
-
         const apiURL =
           `https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`;
 
-
-        const response =
-          await fetch(apiURL, {
-            cache: "no-store"
-          });
-
+        const response = await fetch(apiURL, {
+          cache: "no-store"
+        });
 
         if (!response.ok) {
-
-          throw new Error(
-            `GitHub API error: ${response.status}`
-          );
-
+          throw new Error(`GitHub API error: ${response.status}`);
         }
 
-
-        const data =
-          await response.json();
-
+        const data = await response.json();
 
         if (!data.tree) {
-
-          throw new Error(
-            "GitHub returned no files."
-          );
-
+          throw new Error("GitHub returned no files.");
         }
 
-
-        /*
-         * Get files only.
-         */
-
-        const files =
-          data.tree
-            .filter(
-              item => item.type === "blob"
-            )
-            .filter(
-              item => item.path !== "index.html"
-            )
-            .filter(
-              item => item.path !== "robots.txt"
-            )
-            .sort(
-              (a, b) =>
-                a.path.localeCompare(b.path)
-            );
-
-
-        /*
-         * Update count
-         */
+        // ONLY HTML FILES ARE INCLUDED HERE.
+        // index.html is excluded from the directory.
+        const files = data.tree
+          .filter(item => item.type === "blob")
+          .filter(item => item.path.toLowerCase().endsWith(".html"))
+          .filter(item => item.path.toLowerCase() !== "index.html")
+          .sort((a, b) => a.path.localeCompare(b.path));
 
         countElement.textContent =
-          `${files.length} ${
-            files.length === 1
-              ? "file"
-              : "files"
-          }`;
-
-
-        /*
-         * Clear loading state
-         */
+          `${files.length} ${files.length === 1 ? "page" : "pages"}`;
 
         filesContainer.innerHTML = "";
-
-        filesContainer.classList.remove(
-          "loading"
-        );
-
-
-        /*
-         * No files
-         */
+        filesContainer.classList.remove("loading");
 
         if (files.length === 0) {
-
           filesContainer.innerHTML =
-            `<div class="status">
-              No files found.
-            </div>`;
-
+            '<div class="status">No HTML pages found.</div>';
           return;
-
         }
-
-
-        /*
-         * Process every file
-         */
 
         for (const file of files) {
-
           await createFileEntry(file);
-
         }
-
 
       } catch (error) {
-
         console.error(error);
-
-
         countElement.textContent = "";
-
-
-        filesContainer.classList.remove(
-          "loading"
-        );
-
+        filesContainer.classList.remove("loading");
 
         filesContainer.innerHTML = `
-
           <div class="status error">
-
-            Unable to load repository files.
-
+            Unable to load HTML pages.
             <br><br>
-
             ${escapeHTML(error.message)}
-
           </div>
-
         `;
-
       }
-
     }
 
-
     /*
-     * Create a directory entry
+     * Create one HTML page entry
      */
-
     async function createFileEntry(file) {
-
-      const extension =
-        getExtension(file.path);
-
-
-      /*
-       * Default information
-       */
-
-      let icon = "📄";
-
-      let description = "File";
-
       let title = file.path;
 
+      try {
+        const rawURL =
+          `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${file.path
+            .split("/")
+            .map(encodeURIComponent)
+            .join("/")}`;
 
-      /*
-       * HTML
-       *
-       * Read the <title> element
-       */
+        const response = await fetch(rawURL, {
+          cache: "no-store"
+        });
 
-      if (extension === "html") {
+        if (response.ok) {
+          const html = await response.text();
+          const parser = new DOMParser();
+          const parsedHTML = parser.parseFromString(html, "text/html");
+          const titleElement = parsedHTML.querySelector("title");
 
-        icon = "🌐";
-
-        description = "Web page";
-
-
-        try {
-
-          const rawURL =
-            `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeURI(file.path)}`;
-
-
-          const response =
-            await fetch(rawURL, {
-              cache: "no-store"
-            });
-
-
-          if (response.ok) {
-
-            const html =
-              await response.text();
-
-
-            const parser =
-              new DOMParser();
-
-
-            const document =
-              parser.parseFromString(
-                html,
-                "text/html"
-              );
-
-
-            const titleElement =
-              document.querySelector(
-                "title"
-              );
-
-
-            if (
-              titleElement &&
-              titleElement.textContent.trim()
-            ) {
-
-              title =
-                titleElement
-                  .textContent
-                  .trim();
-
-            }
-
+          if (titleElement && titleElement.textContent.trim()) {
+            title = titleElement.textContent.trim();
           }
-
-        } catch (error) {
-
-          console.warn(
-            "Could not read HTML title:",
-            file.path
-          );
-
         }
-
+      } catch (error) {
+        console.warn("Could not read HTML title:", file.path);
       }
 
-
-      /*
-       * CSS
-       */
-
-      else if (extension === "css") {
-
-        icon = "🎨";
-
-        description = "Stylesheet";
-
-      }
-
-
-      /*
-       * JavaScript
-       */
-
-      else if (extension === "js") {
-
-        icon = "⚡";
-
-        description = "JavaScript";
-
-      }
-
-
-      /*
-       * JSON
-       */
-
-      else if (extension === "json") {
-
-        icon = "📦";
-
-        description = "JSON";
-
-      }
-
-
-      /*
-       * Images
-       */
-
-      else if (
-        [
-          "png",
-          "jpg",
-          "jpeg",
-          "gif",
-          "webp",
-          "svg",
-          "ico"
-        ].includes(extension)
-      ) {
-
-        icon = "🖼️";
-
-        description = "Image";
-
-      }
-
-
-      /*
-       * Archives
-       */
-
-      else if (
-        [
-          "zip",
-          "rar",
-          "7z",
-          "tar",
-          "gz"
-        ].includes(extension)
-      ) {
-
-        icon = "📦";
-
-        description = "Archive";
-
-      }
-
-
-      /*
-       * PDF
-       */
-
-      else if (extension === "pdf") {
-
-        icon = "📕";
-
-        description = "PDF document";
-
-      }
-
-
-      /*
-       * Markdown
-       */
-
-      else if (
-        extension === "md"
-      ) {
-
-        icon = "📝";
-
-        description = "Markdown";
-
-      }
-
-
-      /*
-       * Create link
-       */
-
-      const link =
-        document.createElement("a");
-
-
+      const link = document.createElement("a");
       link.className = "file";
 
+      // Open the corresponding page on the deployed website.
+      link.href = `./${file.path
+        .split("/")
+        .map(encodeURIComponent)
+        .join("/")}`;
 
-      /*
-       * Relative URL
-       *
-       * This works with Netlify.
-       */
+      const left = document.createElement("div");
+      left.className = "file-left";
 
-      link.href =
-        `./${file.path}`;
+      const iconElement = document.createElement("div");
+      iconElement.className = "icon";
+      iconElement.textContent = "🌐";
 
+      const info = document.createElement("div");
+      info.className = "file-info";
 
-      /*
-       * Left section
-       */
+      const filename = document.createElement("span");
+      filename.className = "filename";
+      filename.textContent = title;
 
-      const left =
-        document.createElement("div");
+      const description = document.createElement("span");
+      description.className = "description";
+      description.textContent = "Web page";
 
-      left.className =
-        "file-left";
+      info.appendChild(filename);
+      info.appendChild(description);
 
-
-      /*
-       * Icon
-       */
-
-      const iconElement =
-        document.createElement("div");
-
-      iconElement.className =
-        "icon";
-
-      iconElement.textContent =
-        icon;
-
-
-      /*
-       * Information
-       */
-
-      const info =
-        document.createElement("div");
-
-      info.className =
-        "file-info";
-
-
-      /*
-       * Title
-       */
-
-      const filename =
-        document.createElement("span");
-
-      filename.className =
-        "filename";
-
-      filename.textContent =
-        title;
-
-
-      /*
-       * Description
-       */
-
-      const desc =
-        document.createElement("span");
-
-      desc.className =
-        "description";
-
-      desc.textContent =
-        description;
-
-
-      /*
-       * Actual filename
-       *
-       * Only show it when
-       * the HTML title is different.
-       */
-
-      info.appendChild(
-        filename
-      );
-
-      info.appendChild(
-        desc
-      );
-
-
-      if (
-        extension === "html" &&
-        title !== file.path
-      ) {
-
-        const actualFile =
-          document.createElement(
-            "span"
-          );
-
-
-        actualFile.className =
-          "actual-file";
-
-
-        actualFile.textContent =
-          file.path;
-
-
-        info.appendChild(
-          actualFile
-        );
-
+      // Show the filename beneath the title when they differ.
+      if (title !== file.path) {
+        const actualFile = document.createElement("span");
+        actualFile.className = "actual-file";
+        actualFile.textContent = file.path;
+        info.appendChild(actualFile);
       }
 
+      left.appendChild(iconElement);
+      left.appendChild(info);
 
-      /*
-       * Build left side
-       */
+      const arrow = document.createElement("div");
+      arrow.className = "arrow";
+      arrow.textContent = "→";
 
-      left.appendChild(
-        iconElement
-      );
-
-      left.appendChild(
-        info
-      );
-
-
-      /*
-       * Arrow
-       */
-
-      const arrow =
-        document.createElement(
-          "div"
-        );
-
-
-      arrow.className =
-        "arrow";
-
-
-      arrow.textContent =
-        "→";
-
-
-      /*
-       * Build link
-       */
-
-      link.appendChild(
-        left
-      );
-
-      link.appendChild(
-        arrow
-      );
-
-
-      /*
-       * Add to directory
-       */
-
-      filesContainer.appendChild(
-        link
-      );
-
+      link.appendChild(left);
+      link.appendChild(arrow);
+      filesContainer.appendChild(link);
     }
 
-
     /*
-     * Get file extension
+     * Escape error text before displaying it
      */
-
-    function getExtension(path) {
-
-      const parts =
-        path.split(".");
-
-
-      if (parts.length < 2) {
-
-        return "";
-
-      }
-
-
-      return parts
-        .pop()
-        .toLowerCase();
-
-    }
-
-
-    /*
-     * Escape text
-     */
-
     function escapeHTML(text) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.textContent =
-        text;
-
-
+      const div = document.createElement("div");
+      div.textContent = text;
       return div.innerHTML;
-
     }
 
-
-    /*
-     * Initial load
-     */
-
+    // Initial load
     loadDirectory();
 
-
-    /*
-     * Automatically refresh
-     * every 60 seconds.
-     */
-
-    setInterval(
-      loadDirectory,
-      3600000
-    );
-
+    // Refresh automatically every hour
+    setInterval(loadDirectory, 60000);
   </script>
-
 </body>
-
 </html>
