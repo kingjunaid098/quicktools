@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -48,6 +48,16 @@
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.8px;
+      }
+      .sub-note {
+        font-size: 0.78rem;
+        color: #2e7d32;
+        background: #e8f5e9;
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        margin-top: 8px;
+        font-weight: 600;
       }
       .names-box {
         display: flex;
@@ -180,7 +190,8 @@
     <div class="container">
       <div class="card">
         <div class="header">
-          <h1>₹25K Lended to Nilesh</h1>
+          <h1>₹20K Balance Loan to Nilesh</h1>
+          <div class="sub-note">₹5,000 Repaid on 15 Nov 2026</div>
         </div>
 
         <div class="names-box">
@@ -190,17 +201,17 @@
         </div>
 
         <div id="statusBadge" class="status-badge active">
-          Status: Active Loan
+          Status: Within Deadline
         </div>
 
         <div class="stat-grid">
           <div class="stat-item">
-            <span class="stat-label">Principal Amount</span>
-            <span class="stat-value">₹25,000</span>
+            <span class="stat-label">Remaining Principal</span>
+            <span class="stat-value">₹20,000</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Daily Interest</span>
-            <span class="stat-value">₹18 / day</span>
+            <span class="stat-value">₹16 / day</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Start Date</span>
@@ -211,7 +222,7 @@
             <span class="stat-value">30 Nov 2026</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">Days Elapsed</span>
+            <span class="stat-label">Total Days Elapsed</span>
             <span id="daysCount" class="stat-value">--</span>
           </div>
           <div class="stat-item">
@@ -222,22 +233,32 @@
 
         <div class="total-section">
           <div class="breakdown-row">
-            <span>Principal Amount:</span>
-            <span id="principalDisplay">₹25,000.00</span>
+            <span>Remaining Principal:</span>
+            <span id="principalDisplay">₹20,000.00</span>
           </div>
           <div class="breakdown-row">
-            <span>Interest Accrued (₹18/day):</span>
-            <span id="interestDisplay">₹0.00</span>
+            <span>Prior Interest (till 15 Nov):</span>
+            <span>₹558.00</span>
           </div>
-          <div class="breakdown-row penalty-row" id="penaltyBreakdownRow" style="display: none;">
+          <div class="breakdown-row">
+            <span id="newInterestLabel">New Interest (₹16/day):</span>
+            <span id="newInterestDisplay">₹0.00</span>
+          </div>
+          <div
+            class="breakdown-row penalty-row"
+            id="penaltyBreakdownRow"
+            style="display: none"
+          >
             <span id="penaltyLabel">Overdue Penalty (₹7/day):</span>
             <span id="penaltyDisplay">₹0.00</span>
           </div>
 
           <span class="total-label">Total Amount Due</span>
-          <span id="totalDueDisplay" class="total-amount">₹25,000.00</span>
+          <span id="totalDueDisplay" class="total-amount">₹20,558.00</span>
 
-          <div id="dailyRateTag" class="daily-tag">Daily Rate: +₹18.00 / day</div>
+          <div id="dailyRateTag" class="daily-tag">
+            Daily Rate: +₹16.00 / day
+          </div>
         </div>
 
         <footer>Live calculation based on current IST time</footer>
@@ -246,18 +267,20 @@
 
     <script>
       function calculateLoan() {
-        const principal = 25000;
-        const dailyInterestRate = 18;
+        const remainingPrincipal = 20000;
+        const priorInterest = 558; // 31 days (15 Oct - 15 Nov) @ ₹18/day
+        const newDailyInterestRate = 16; // Revised rate from 15 Nov 2026 onwards
         const dailyPenaltyRate = 7;
 
         // Dates setup with IST offset (+05:30)
         const startDate = new Date("2026-10-15T00:00:00+05:30");
+        const revisionDate = new Date("2026-11-15T00:00:00+05:30");
         const deadlineDate = new Date("2026-11-30T23:59:59+05:30");
 
         // Get Current Time in India (IST)
         const now = new Date();
         const nowIST = new Date(
-          now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+          now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
         );
 
         // Formatter setup for Indian currency formatting
@@ -266,23 +289,22 @@
           maximumFractionDigits: 2,
         });
 
-        // Time difference from Start Date
-        const diffInMs = nowIST - startDate;
+        // Total days elapsed since original loan start (15 Oct 2026)
+        const totalDiffInMs = nowIST - startDate;
+        const totalDaysPassed = Math.max(
+          0,
+          Math.floor(totalDiffInMs / (1000 * 60 * 60 * 24)),
+        );
 
-        // If the start date hasn't arrived yet
-        if (diffInMs < 0) {
-          document.getElementById("daysCount").innerText = "0 days";
-          document.getElementById("interestDisplay").innerText = "₹0.00";
-          document.getElementById("totalDueDisplay").innerText = "₹25,000.00";
-          document.getElementById("statusBadge").className = "status-badge active";
-          document.getElementById("statusBadge").innerText = "Status: Not Started";
-          document.getElementById("penaltyBreakdownRow").style.display = "none";
-          return;
-        }
+        // Days elapsed since ₹5,000 repayment & rate revision (15 Nov 2026)
+        const revisionDiffInMs = nowIST - revisionDate;
+        const daysSinceRevision = Math.max(
+          0,
+          Math.floor(revisionDiffInMs / (1000 * 60 * 60 * 24)),
+        );
 
-        // Days elapsed since loan start
-        const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-        const totalInterest = daysPassed * dailyInterestRate;
+        const newInterestAccrued = daysSinceRevision * newDailyInterestRate;
+        const totalInterest = priorInterest + newInterestAccrued;
 
         // Overdue & Penalty Calculation
         let overdueDays = 0;
@@ -294,17 +316,23 @@
           const deadlineStart = new Date("2026-12-01T00:00:00+05:30");
           const overdueDiffInMs = nowIST - deadlineStart;
           if (overdueDiffInMs >= 0) {
-            overdueDays = Math.floor(overdueDiffInMs / (1000 * 60 * 60 * 24)) + 1;
+            overdueDays =
+              Math.floor(overdueDiffInMs / (1000 * 60 * 60 * 24)) + 1;
             totalPenalty = overdueDays * dailyPenaltyRate;
           }
         }
 
-        const totalOverall = principal + totalInterest + totalPenalty;
+        const totalOverall = remainingPrincipal + totalInterest + totalPenalty;
 
         // Update UI Elements
-        document.getElementById("daysCount").innerText = `${daysPassed} day${daysPassed !== 1 ? 's' : ''}`;
-        document.getElementById("interestDisplay").innerText = `₹${currencyFormatter.format(totalInterest)}`;
-        document.getElementById("totalDueDisplay").innerText = `₹${currencyFormatter.format(totalOverall)}`;
+        document.getElementById("daysCount").innerText =
+          `${totalDaysPassed} day${totalDaysPassed !== 1 ? "s" : ""}`;
+        document.getElementById("newInterestLabel").innerText =
+          `New Interest (${daysSinceRevision}d × ₹16):`;
+        document.getElementById("newInterestDisplay").innerText =
+          `₹${currencyFormatter.format(newInterestAccrued)}`;
+        document.getElementById("totalDueDisplay").innerText =
+          `₹${currencyFormatter.format(totalOverall)}`;
 
         // UI Updates for Overdue state vs Active state
         const statusBadge = document.getElementById("statusBadge");
@@ -313,18 +341,20 @@
 
         if (isOverdue && overdueDays > 0) {
           statusBadge.className = "status-badge overdue";
-          statusBadge.innerText = `Status: Overdue (${overdueDays} day${overdueDays !== 1 ? 's' : ''})`;
-          
+          statusBadge.innerText = `Status: Overdue (${overdueDays} day${overdueDays !== 1 ? "s" : ""})`;
+
           penaltyRow.style.display = "flex";
-          document.getElementById("penaltyLabel").innerText = `Overdue Penalty (${overdueDays}d × ₹7):`;
-          document.getElementById("penaltyDisplay").innerText = `₹${currencyFormatter.format(totalPenalty)}`;
-          
-          dailyRateTag.innerText = `Daily Accumulation: +₹${dailyInterestRate + dailyPenaltyRate}.00 / day (₹18 + ₹7 penalty)`;
+          document.getElementById("penaltyLabel").innerText =
+            `Overdue Penalty (${overdueDays}d × ₹7):`;
+          document.getElementById("penaltyDisplay").innerText =
+            `₹${currencyFormatter.format(totalPenalty)}`;
+
+          dailyRateTag.innerText = `Daily Accumulation: +₹${newDailyInterestRate + dailyPenaltyRate}.00 / day (₹16 + ₹7 penalty)`;
         } else {
           statusBadge.className = "status-badge active";
           statusBadge.innerText = "Status: Within Deadline";
           penaltyRow.style.display = "none";
-          dailyRateTag.innerText = `Daily Rate: +₹${dailyInterestRate}.00 / day`;
+          dailyRateTag.innerText = `Daily Rate: +₹${newDailyInterestRate}.00 / day`;
         }
       }
 
